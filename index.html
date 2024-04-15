@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writer's Block</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body data-theme="light">
+    <div id="container">
+        <header id="header">
+            <h1 id="title">Writer's Block</h1>
+        </header>
+        <div id="writingArea" contenteditable="true" placeholder="Set your thoughts free..."></div>
+        <footer id="footer">
+            <span id="wordCount">0 words</span>
+            <div id="gptSuggestContainer">
+                <a href="#" id="gptSuggest">Get GPT-4 Suggestions</a>
+            </div>
+            <span id="charCount">0 chars</span>
+        </footer>
+
+    </div>
+    <div class="switch-container">
+        <label class="switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="slider round"></span>
+        </label>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
