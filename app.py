@@ -22,7 +22,7 @@ client = AzureOpenAI(
 
 @app.route('/')
 def index():
-    return send_from_directory('static', 'index.html')
+    return send_from_directory('index.html')
 
 @app.route('/getCompletion', methods=['POST'])
 def get_completion():
