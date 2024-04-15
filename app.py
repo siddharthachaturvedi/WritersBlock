@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_file
 import os
 from dotenv import load_dotenv
 from openai import AzureOpenAI
@@ -22,7 +22,7 @@ client = AzureOpenAI(
 
 @app.route('/')
 def index():
-    return send_from_directory('index.html')
+    return send_file('index.html')
 
 @app.route('/getCompletion', methods=['POST'])
 def get_completion():
