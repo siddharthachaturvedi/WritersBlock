@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
             showProcessingMessage();
 
             // Update the URL to point to your Flask server's endpoint
-            const url = 'https://writenow.azurewebsites.net/getCompletion'; // Update this to your Azure URL
+            const url = 'http://localhost:5000/getCompletion'; // Local Flask server endpoint
             const headers = new Headers({
                 'Content-Type': 'application/json'
             });
