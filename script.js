@@ -8,15 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('ellipsis').addEventListener('click', function() {
         var content = document.getElementById('footer-hidden-content');
-        // Check if the max-height is not '0px', which means it's visible
         if (content.style.maxHeight !== '0px' && content.style.maxHeight !== '') {
-            content.style.maxHeight = '0px'; // Slide up
+            content.style.maxHeight = '0px';
         } else {
-            content.style.maxHeight = '500px'; // Slide down, adjust the value as necessary
+            content.style.maxHeight = '500px';
         }
         this.classList.toggle('active');
     });
-    
 
     document.getElementById('downloadMasterpiece').addEventListener('click', function(event) {
         event.preventDefault();
@@ -28,8 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         downloadLink.target = '_blank';
         downloadLink.click();
     });
-    
-    // Placeholder functionality
+
     function setPlaceholder() {
         if (writingArea.innerText.trim() === '') {
             writingArea.innerText = placeholderText;
@@ -46,11 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     writingArea.addEventListener('focus', removePlaceholder);
     writingArea.addEventListener('blur', setPlaceholder);
-
-    // Set placeholder on initial load
     setPlaceholder();
 
-    // Event listeners
     writingArea.addEventListener('input', function () {
         const text = writingArea.innerText;
         if (text !== placeholderText) {
@@ -67,18 +61,50 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     gptSuggestButton.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent default link behavior
+        event.preventDefault();
         removePlaceholder();
+
         const paragraphs = writingArea.innerText.trim().split('\n');
         const lastParagraph = paragraphs.pop();
+
         if (lastParagraph && lastParagraph !== placeholderText) {
-            const mockResponse = `\n\nGPT-4: "Following your last paragraph, here's an idea..."`;
-            writingArea.innerText += mockResponse;
-            updateWordAndCharCounts();
-            // Scroll to the bottom of the document
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            showProcessingMessage();
+
+            // Update the URL to point to your Flask server's endpoint
+            const url = 'http://localhost:5000/getCompletion'; // Local Flask server endpoint
+            const headers = new Headers({
+                'Content-Type': 'application/json'
+            });
+
+            fetch(url, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({ lastParagraph: lastParagraph })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                removeProcessingMessage();
+                if(data.text) {
+                    writingArea.innerText += `\n\n${data.text}`;
+                } else {
+                    writingArea.innerText += `\n\nError: Received no data`;
+                }
+                updateWordAndCharCounts();
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            })
+            .catch(err => {
+                removeProcessingMessage();
+                console.error('Error fetching GPT-4 suggestion:', err);
+                writingArea.innerText += `\n\nError: ${err.message}`;
+            });
+        } else {
+            setPlaceholder();
         }
-        setPlaceholder();
     });
 
     function updateWordAndCharCounts() {
@@ -89,5 +115,14 @@ document.addEventListener('DOMContentLoaded', function () {
             wordCountDisplay.textContent = `${words} words`;
             charCountDisplay.textContent = `${chars} chars`;
         }
+    }
+
+    function showProcessingMessage() {
+        writingArea.innerText += '\n\nGPT-4 is thinking...';
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    function removeProcessingMessage() {
+        writingArea.innerText = writingArea.innerText.replace('\n\nGPT-4 is thinking...', '');
     }
 });
