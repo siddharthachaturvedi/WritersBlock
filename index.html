@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
-
 <body data-theme="light">
     <div id="container">
         <header id="header">
@@ -16,13 +14,20 @@
         </header>
         <div id="writingArea" contenteditable="true" placeholder="Set your thoughts free..."></div>
         <footer id="footer">
-            <span id="wordCount">0 words</span>
-            <div id="gptSuggestContainer">
+            <div id="footer-row-1" class="footer-row">
+                <span id="wordCount">0 words</span>
                 <a href="#" id="gptSuggest">Get GPT-4 Suggestions</a>
+                <span id="charCount">0 chars</span>
             </div>
-            <span id="charCount">0 chars</span>
+            <div id="footer-reveal">
+                <!-- Updated the id to match the JS event listener -->
+                <a href="#" id="ellipsis" class="ellipsis">...</a>
+                <div id="footer-hidden-content" class="hidden-content">
+                    <a href="#" id="downloadMasterpiece">Download Masterpiece</a>
+                    <div id="credits">Made with ❤️ by Sid</div>
+                </div>
+            </div>
         </footer>
-
     </div>
     <div class="switch-container">
         <label class="switch">
@@ -32,5 +37,4 @@
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>

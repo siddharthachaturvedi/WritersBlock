@@ -6,6 +6,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const themeToggle = document.getElementById('themeToggle');
     const placeholderText = 'Set your thoughts free...';
 
+    document.getElementById('ellipsis').addEventListener('click', function() {
+        var content = document.getElementById('footer-hidden-content');
+        // Check if the max-height is not '0px', which means it's visible
+        if (content.style.maxHeight !== '0px' && content.style.maxHeight !== '') {
+            content.style.maxHeight = '0px'; // Slide up
+        } else {
+            content.style.maxHeight = '500px'; // Slide down, adjust the value as necessary
+        }
+        this.classList.toggle('active');
+    });
+    
+
+    document.getElementById('downloadMasterpiece').addEventListener('click', function(event) {
+        event.preventDefault();
+        const text = writingArea.innerText;
+        const blob = new Blob([text], { type: 'text/plain' });
+        const downloadLink = document.createElement('a');
+        downloadLink.download = "My_Masterpiece.txt";
+        downloadLink.href = window.URL.createObjectURL(blob);
+        downloadLink.target = '_blank';
+        downloadLink.click();
+    });
+    
     // Placeholder functionality
     function setPlaceholder() {
         if (writingArea.innerText.trim() === '') {

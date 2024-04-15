@@ -12,8 +12,12 @@
     --transition-speed: 0.4s;
 }
 
-body,
-html {
+/* Apply a global transition property to all elements that change during the theme toggle. */
+*, *::before, *::after {
+    transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+}
+
+body, html {
     margin: 0;
     padding: 0;
     font-family: 'Roboto Mono', monospace;
@@ -31,39 +35,21 @@ body[data-theme="dark"] {
     color: var(--text-color-dark);
 }
 
-#header,
-#footer {
+#header {
     position: fixed;
+    top: 0;
     left: 0;
     right: 0;
     padding: 20px 0;
     background-color: var(--background-color-light);
-    color: var(--text-color-light);
-    z-index: 10;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
-}
-
-#header {
-    top: 0;
     text-align: center;
+    z-index: 10;
 }
 
 #title {
     margin: 0;
-    font-family: 'Roboto Mono', monospace;
     font-size: 24px;
-    /* Larger size for the header */
     color: grey;
-}
-
-body[data-theme="dark"] #header {
-    background-color: var(--background-color-dark);
-    color: var(--text-color-dark);
-}
-
-body[data-theme="dark"] #footer {
-    background-color: var(--background-color-dark);
-    color: var(--text-color-dark);
 }
 
 #container {
@@ -71,8 +57,7 @@ body[data-theme="dark"] #footer {
     padding-bottom: 80px;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    box-sizing: border-box;
+    min-height: 80vh;
 }
 
 #writingArea {
@@ -87,15 +72,9 @@ body[data-theme="dark"] #footer {
     overflow-wrap: break-word;
     caret-color: var(--cursor-color);
     line-height: 1.5;
-    min-height: calc(100vh - 200px);
-    max-width: 800px;
+    min-height: calc(100vh - 250px);
+    max-width: 1200px;
     width: 90%;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
-}
-
-body[data-theme="dark"] #writingArea {
-    background: var(--input-background-color-dark);
-    color: var(--text-color-dark);
 }
 
 #writingArea.placeholder {
@@ -103,26 +82,72 @@ body[data-theme="dark"] #writingArea {
 }
 
 #footer {
+    position: fixed;
     bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--background-color-light);
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    z-index: 10;
+    text-align: center;
+}
+
+#footer .footer-row {
+    margin: 5px 0;
+}
+
+#footer-row-1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #ccc;
+    padding: 0 20px;
 }
 
-#wordCount,
-#charCount {
-    padding: 0 15px;
-    transition: color var(--transition-speed);
-}
-
-#gptSuggest {
+#footer-row-1 a {
+    text-decoration: none;
     color: var(--link-color);
+    padding: 0 15px;
+}
+
+#footer-reveal .ellipsis {
+    font-size: 2em;
+    color: grey; /* Default color */
+    cursor: pointer;
+    background: none;
+    border: none;
+    display: block;
+    margin: 10px auto;
+    text-decoration: none;
     transition: color var(--transition-speed);
 }
 
-body[data-theme="dark"] #gptSuggest {
-    color: var(--link-color-dark);
+#footer-reveal .ellipsis.active {
+    color: red; /* Changes color to red when active */
+}
+
+#footer-hidden-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+#footer-reveal .ellipsis.active + #footer-hidden-content {
+    max-height: 500px; /* Set a large enough max-height to cover the content size */
+}
+
+
+#downloadMasterpiece {
+    color: red;
+    text-decoration: none;
+    margin: 10px 0;
+    display: block;
+}
+
+#credits {
+    color: grey;
+    font-size: 0.8rem;
+    margin: 10px 0;
 }
 
 .switch-container {
@@ -134,7 +159,6 @@ body[data-theme="dark"] #gptSuggest {
 
 .switch {
     display: inline-block;
-    position: relative;
     width: 60px;
     height: 34px;
 }
@@ -147,8 +171,8 @@ body[data-theme="dark"] #gptSuggest {
     right: 0;
     bottom: 0;
     background-color: #ccc;
+    transition: .4s;
     border-radius: 34px;
-    transition: background-color var(--transition-speed);
 }
 
 .slider:before {
@@ -159,31 +183,57 @@ body[data-theme="dark"] #gptSuggest {
     left: 4px;
     bottom: 4px;
     background-color: white;
+    transition: .4s;
     border-radius: 50%;
-    transition: transform var(--transition-speed);
 }
 
-input:checked+.slider {
+input:checked + .slider {
     background-color: #9e2a2b;
 }
 
-input:focus+.slider {
-    box-shadow: 0 0 1px #9e2a2b;
-}
-
-input:checked+.slider:before {
+input:checked + .slider:before {
     transform: translateX(26px);
 }
 
-@media (max-width: 600px) {
+/* Apply dark theme styles */
+body[data-theme="dark"] #header,
+body[data-theme="dark"] #footer {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+}
 
-    #header,
-    #footer {
+body[data-theme="dark"] #writingArea {
+    background: var(--input-background-color-dark);
+    color: var(--text-color-dark);
+}
+
+body[data-theme="dark"] #gptSuggest,
+body[data-theme="dark"] #downloadMasterpiece {
+    color: var(--link-color-dark);
+}
+
+#header,
+#footer,
+.switch .slider,
+.switch .slider:before {
+    transition: background-color var(--transition-speed), color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+@media (max-width: 600px) {
+    #header, #footer {
         padding: 15px 0;
     }
 
     #writingArea {
         width: 85%;
         padding: 8px;
+    }
+
+    #wordCount, #charCount {
+        padding: 0 10px;
+    }
+
+    #footer-row-1 a {
+        padding: 0 10px;
     }
 }
