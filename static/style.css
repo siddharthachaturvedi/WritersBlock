@@ -72,9 +72,11 @@ body[data-theme="dark"] {
     overflow-wrap: break-word;
     caret-color: var(--cursor-color);
     line-height: 1.5;
-    min-height: calc(100vh - 250px);
+    min-height: calc(100vh - 500px);
     max-width: 1200px;
     width: 90%;
+    padding-bottom: 100px; /* Adjust this value to the height of your footer */
+    margin-bottom: -50px; /* Negative margin half of the padding to keep the layout consistent */
 }
 
 #writingArea.placeholder {
