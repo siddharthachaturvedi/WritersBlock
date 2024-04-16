@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     2. Need ideas? Click 'Get GPT-4 Suggestions'.
     3. To save: Press 'Download your masterpiece'.
 
-    Everything vanishes on refresh—nothing stored, nothing tracked.
+    Everything vanishes on refresh. Nothing stored, nothing tracked.
     
     Happy writing! 🌈📝`;
     

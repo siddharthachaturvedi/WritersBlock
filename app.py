@@ -32,7 +32,7 @@ def get_completion():
     try:
         completion = client.chat.completions.create(
             model='gpt-4-32k', # Replace with your model name or deployment name
-            messages = [{"role": "system","content": "You are a brilliant ghostwriter who helps unblock mental blocks that people run into, and you will use the previous paragraph, the tone, the language to complete the next paragraph."}, { "role": "user", "content": user_input }],
+            messages = [{"role": "system","content": "You are a ghostwriter with the best of all writers, who takes whatever is written before, and continues it in the same tone, same vein, as a story, a prose or a poem, depending on what the previous line is. For example for Hello, you write as if it was the first word of a book."}, { "role": "user", "content": user_input }],
             temperature=0.7,
             max_tokens=800,
             top_p=0.95,
