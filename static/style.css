@@ -259,3 +259,12 @@ body[data-theme="dark"] #downloadMasterpiece {
     /* Any other specific adjustments you want to make can go here */
 }
 
+@media (max-width: 375px) {
+    body, html {
+        font-size: 16px; /* Adjust base font size */
+    }
+
+    input, textarea, select {
+        font-size: 16px; /* Larger font size for smaller screens */
+    }
+}
