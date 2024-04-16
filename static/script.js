@@ -4,25 +4,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const charCountDisplay = document.getElementById('charCount');
     const gptSuggestButton = document.getElementById('gptSuggest');
     const themeToggle = document.getElementById('themeToggle');
-    const placeholderText = `Hello at writeByte.org! 👋
+    const placeholderText = `Welcome to writeByte.org! 👋
+    Your private, distraction-free writing space.
+    1. Full Screen: F11 (PC) or Cmd+Ctrl+F (Mac)
+    2. Need ideas? Click 'Get GPT-4 Suggestions'.
+    3. To save: Press 'Download your masterpiece'.
 
-    🔍 This is your ultra-minimalist space to write. No timers, no clutter, just you and your words. 
-    Yes there is a dark mode - that's the toggle on the top right.
+    Everything vanishes on refresh—nothing stored, nothing tracked.
     
-    1️⃣ Dive into focus mode. 
-    Go full screen - Press F11 on PC or Cmd+Ctrl+F on Mac.
-    
-    2️⃣ Writer's Block? Hit 'Get GPT-4 Suggestions'. 
-    Our AI is here to help you find your flow again, but it won't record anything.
-    
-    3️⃣ Save: Your words, your masterpieces. Press 'Download your masterpiece' to save your work to your device. 
-    We don't keep a copy - your privacy, your terms.
-    
-    👉 Click here to make this disappear. 
-
-    📝Happy writing
-    
-    🧑‍💻 Built with 💖 by @siddhartha_c, who wished he had a minimal typing app, that didn't track him. And was free.`;
+    Happy writing! 🌈📝`;
     
 
     document.getElementById('ellipsis').addEventListener('click', function() {

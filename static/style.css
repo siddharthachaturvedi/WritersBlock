@@ -222,20 +222,40 @@ body[data-theme="dark"] #downloadMasterpiece {
 }
 
 @media (max-width: 600px) {
-    #header, #footer {
-        padding: 15px 0;
+    body, html {
+        font-size: 14px; /* Smaller base font size */
+    }
+
+    #header {
+        padding: 15px 0; /* Smaller header padding */
+    }
+
+    #title {
+        font-size: 20px; /* Smaller title font size */
     }
 
     #writingArea {
-        width: 85%;
-        padding: 8px;
+        padding: 15px; /* Smaller padding */
+        font-size: 14px; /* Smaller font size for writing area */
     }
 
-    #wordCount, #charCount {
-        padding: 0 10px;
+    #footer {
+        padding: 8px 0; /* Smaller footer padding */
+    }
+
+    #footer .footer-row {
+        margin: 4px 0; /* Smaller margin for footer rows */
     }
 
     #footer-row-1 a {
-        padding: 0 10px;
+        font-size: 14px; /* Smaller font size for footer links */
     }
+
+    .switch-container {
+        top: 15px;
+        right: 15px; /* Adjust switch position */
+    }
+
+    /* Any other specific adjustments you want to make can go here */
 }
+
