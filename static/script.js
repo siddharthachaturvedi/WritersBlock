@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     gptSuggestButton.addEventListener('click', function (event) {
         event.preventDefault();
+        event.stopPropagation();
         removePlaceholder();
         gptSuggestButton.disabled = true; // Disable the button
         gptSuggestButton.style.opacity = '0.5'; // Gray out the button
