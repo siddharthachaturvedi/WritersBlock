@@ -85,6 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (lastParagraph && lastParagraph !== placeholderText) {
             showProcessingMessage();
+            gptSuggestButton.disabled = true; // Disable the button
+            gptSuggestButton.style.opacity = '0.5'; // Gray out the button
 
             const url = 'https://writenow.azurewebsites.net/getCompletion';
             const headers = new Headers({
@@ -113,9 +115,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             })
             .catch(err => {
-                removeProcessingMessage();
                 console.error('Error fetching GPT-4 suggestion:', err);
                 writingArea.innerText += `\n\nError: ${err.message}`;
+            })
+            .finally(() => {
+                gptSuggestButton.disabled = false; // Re-enable the button
+                gptSuggestButton.style.opacity = '1'; // Restore button opacity
             });
         } else {
             setPlaceholder();
