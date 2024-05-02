@@ -14,13 +14,30 @@ document.addEventListener('DOMContentLoaded', function () {
     
     Happy writing! 🌈📝`;
 
+    function updateWordAndCharCounts() {
+        const text = writingArea.innerText;
+        if (text !== placeholderText) {
+            const words = text.match(/\S+/g) ? text.match(/\S+/g).length : 0;
+            const chars = text.length;
+            wordCountDisplay.textContent = `${words} words`;
+            charCountDisplay.textContent = `${chars} chars`;
+        }
+    }
+
     // Load saved text from local storage when the page loads
     const savedText = localStorage.getItem('savedText');
     if (savedText) {
         writingArea.innerText = savedText;
+        updateWordAndCharCounts(); // Update word and character counts based on loaded text
     } else {
         setPlaceholder();
     }
+
+    writingArea.addEventListener('input', function () {
+        const text = this.innerText;
+        localStorage.setItem('savedText', text); // Save the current text to local storage
+        updateWordAndCharCounts(); // Update counts on every input event
+    });
 
     document.getElementById('ellipsis').addEventListener('click', function() {
         var content = document.getElementById('footer-hidden-content');
@@ -60,17 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
     writingArea.addEventListener('focus', removePlaceholder);
     writingArea.addEventListener('blur', setPlaceholder);
 
-    writingArea.addEventListener('input', function () {
-        const text = writingArea.innerText;
-        if (text !== placeholderText) {
-            localStorage.setItem('savedText', text); // Save the current text to local storage
-            const words = text.match(/\S+/g) ? text.match(/\S+/g).length : 0;
-            const chars = text.length;
-            wordCountDisplay.textContent = `${words} words`;
-            charCountDisplay.textContent = `${chars} chars`;
-        }
-    });
-
     themeToggle.addEventListener('change', function () {
         const isDarkMode = themeToggle.checked;
         document.body.dataset.theme = isDarkMode ? 'dark' : 'light';
@@ -79,15 +85,14 @@ document.addEventListener('DOMContentLoaded', function () {
     gptSuggestButton.addEventListener('click', function (event) {
         event.preventDefault();
         removePlaceholder();
+        gptSuggestButton.disabled = true; // Disable the button
+        gptSuggestButton.style.opacity = '0.5'; // Gray out the button
 
         const paragraphs = writingArea.innerText.trim().split('\n');
         const lastParagraph = paragraphs.pop();
 
         if (lastParagraph && lastParagraph !== placeholderText) {
             showProcessingMessage();
-            gptSuggestButton.disabled = true; // Disable the button
-            gptSuggestButton.style.opacity = '0.5'; // Gray out the button
-
             const url = 'https://writenow.azurewebsites.net/getCompletion';
             const headers = new Headers({
                 'Content-Type': 'application/json'
@@ -106,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(data => {
                 removeProcessingMessage();
-                if(data.text) {
+                if (data.text) {
                     writingArea.innerText += `\n\n${data.text}`;
                 } else {
                     writingArea.innerText += `\n\nError: Received no data`;
@@ -117,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(err => {
                 console.error('Error fetching GPT-4 suggestion:', err);
                 writingArea.innerText += `\n\nError: ${err.message}`;
+                removeProcessingMessage();
             })
             .finally(() => {
                 gptSuggestButton.disabled = false; // Re-enable the button
@@ -126,16 +132,6 @@ document.addEventListener('DOMContentLoaded', function () {
             setPlaceholder();
         }
     });
-
-    function updateWordAndCharCounts() {
-        const text = writingArea.innerText;
-        if (text !== placeholderText) {
-            const words = text.match(/\S+/g) ? text.match(/\S+/g).length : 0;
-            const chars = text.length;
-            wordCountDisplay.textContent = `${words} words`;
-            charCountDisplay.textContent = `${chars} chars`;
-        }
-    }
 
     function showProcessingMessage() {
         writingArea.innerText += '\n\nGPT-4 is thinking...';
