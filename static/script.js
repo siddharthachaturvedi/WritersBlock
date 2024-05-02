@@ -13,7 +13,14 @@ document.addEventListener('DOMContentLoaded', function () {
     Everything vanishes on refresh. Nothing stored, nothing tracked.
     
     Happy writing! 🌈📝`;
-    
+
+    // Load saved text from local storage when the page loads
+    const savedText = localStorage.getItem('savedText');
+    if (savedText) {
+        writingArea.innerText = savedText;
+    } else {
+        setPlaceholder();
+    }
 
     document.getElementById('ellipsis').addEventListener('click', function() {
         var content = document.getElementById('footer-hidden-content');
@@ -52,11 +59,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     writingArea.addEventListener('focus', removePlaceholder);
     writingArea.addEventListener('blur', setPlaceholder);
-    setPlaceholder();
 
     writingArea.addEventListener('input', function () {
         const text = writingArea.innerText;
         if (text !== placeholderText) {
+            localStorage.setItem('savedText', text); // Save the current text to local storage
             const words = text.match(/\S+/g) ? text.match(/\S+/g).length : 0;
             const chars = text.length;
             wordCountDisplay.textContent = `${words} words`;
@@ -79,8 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (lastParagraph && lastParagraph !== placeholderText) {
             showProcessingMessage();
 
-            // Update the URL to point to your Flask server's endpoint
-            const url = 'https://writenow.azurewebsites.net/getCompletion'; // Update this to your Azure URL
+            const url = 'https://writenow.azurewebsites.net/getCompletion';
             const headers = new Headers({
                 'Content-Type': 'application/json'
             });
