@@ -9,6 +9,7 @@
 - **Live Word & Character Counts**: Track your progress in real-time, celebrating each word you write.
 - **Download Capability**: Easily download your writings in a text file with a single click.
 - **Theme Toggle**: Choose between light and dark mode to suit your preference and lighting conditions.
+- **Markdown Rendering**: Automatically render markdown as you type for a seamless writing experience.
 
 ## Break Through Writer's Block 🔓
 
@@ -23,7 +24,8 @@ At writeByte.org, we understand how paralyzing writer's block can be. That's why
 2. **Write**: Just begin typing. If you're stuck, click on "Get GPT-4 Suggestions" to get inspired.
 3. **Monitor Your Progress**: Keep an eye on the word and character count as you write.
 4. **Adjust the Theme**: Switch between themes based on your preference or time of day.
-5. **Save Your Work**: Download your text file to ensure your thoughts are saved forever.
+5. **Render Markdown**: See your markdown rendered in real-time as you type.
+6. **Save Your Work**: Download your text file to ensure your thoughts are saved forever.
 
 ## Your Privacy Matters 🛡️
 

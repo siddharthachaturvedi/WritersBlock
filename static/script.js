@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const charCountDisplay = document.getElementById('charCount');
     const gptSuggestButton = document.getElementById('gptSuggest');
     const themeToggle = document.getElementById('themeToggle');
+    const markdownPreview = document.getElementById('markdownPreview');
     const placeholderText = `Welcome to writeByte.org! 👋
     Your private, distraction-free writing space.
     1. Full Screen: F11 (PC) or Cmd+Ctrl+F (Mac)
@@ -24,11 +25,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function renderMarkdown() {
+        const markdownText = writingArea.innerText;
+        const html = marked(markdownText);
+        markdownPreview.innerHTML = html;
+    }
+
     // Load saved text from local storage when the page loads
     const savedText = localStorage.getItem('savedText');
     if (savedText) {
         writingArea.innerText = savedText;
         updateWordAndCharCounts(); // Update word and character counts based on loaded text
+        renderMarkdown(); // Render markdown based on loaded text
     } else {
         setPlaceholder();
     }
@@ -37,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const text = this.innerText;
         localStorage.setItem('savedText', text); // Save the current text to local storage
         updateWordAndCharCounts(); // Update counts on every input event
+        renderMarkdown(); // Render markdown on every input event
     });
 
     document.getElementById('ellipsis').addEventListener('click', function() {
